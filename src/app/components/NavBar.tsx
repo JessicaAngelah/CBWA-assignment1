@@ -7,8 +7,10 @@ import "../globals.css";
 
 const Navbar = () => {
   const [darkMode, setDarkMode] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
 
+  // Dark mode toggle
   useEffect(() => {
     if (darkMode) {
       document.body.classList.add("dark-mode");
@@ -40,10 +42,8 @@ const Navbar = () => {
       </ul>
 
       <div className="nav-right">
-        {/* Emoji indicator */}
-        <span className="mode-icon">{darkMode ? "🌙" : "🌞"}</span>
-
         {/* Dark mode toggle */}
+        <span className="mode-icon">{darkMode ? "🌙" : "🌞"}</span>
         <label className="switch">
           <input
             type="checkbox"
@@ -54,10 +54,25 @@ const Navbar = () => {
         </label>
 
         {/* Ellipsis button */}
-        <button className="ellipsis-btn">⋮</button>
+        <div className="ellipsis-menu-wrapper">
+          <button
+            className={`ellipsis-btn ${menuOpen ? "open" : ""}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            ⋮
+          </button>
+
+          {/* Dropdown menu */}
+          <div className={`dropdown ${menuOpen ? "show" : ""}`}>
+            <button>Settings</button>
+            <button>Help</button>
+            <button>Logout</button>
+          </div>
+        </div>
       </div>
     </nav>
   );
 };
 
 export default Navbar;
+  

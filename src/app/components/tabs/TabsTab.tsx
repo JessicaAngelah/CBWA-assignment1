@@ -6,26 +6,56 @@ export default function TabsTab() {
   const [activeStep, setActiveStep] = useState(0);
 
   const stepContents = [
-    {
-      content:
-        "This is a long ahhh paragraph for Step 1. It explains everything in detail about this step.",
-      output: "Output generated for Step 1...",
-    },
-    {
-      content:
-        "This is a long ahhh paragraph for Step 2. It contains more details and expanded explanation.",
-      output: "Output generated for Step 2...",
-    },
-    {
-      content:
-        "This is a long ahhh paragraph for Step 3. It goes in depth about what happens in this step.",
-      output: "Output generated for Step 3...",
-    },
+    { content: "This is a long ahhh paragraph for Step 1.", output: "Output for Step 1" },
+    { content: "This is a long ahhh paragraph for Step 2.", output: "Output for Step 2" },
+    { content: "This is a long ahhh paragraph for Step 3.", output: "Output for Step 3" },
   ];
 
   const addStep = () => {
     const newStepNum = steps.length + 1;
     setSteps([...steps, `Step ${newStepNum}`]);
+  };
+
+  // ✅ Generate HTML output with inline styles only
+  const generateOutputHTML = () => {
+    let tabsHTML = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Tabs Demo</title>
+</head>
+<body style="font-family: Arial, sans-serif; background:#ffe4e9; padding:20px;">
+  <div style="display:flex; gap:20px;">
+    <!-- Left column -->
+    <div style="flex:1; border:2px solid black; border-radius:8px; padding:10px; background:#ffdcdc;">
+      <h3 style="margin:0 0 10px 0;">Tabs</h3>
+      ${steps
+        .map(
+          (step, i) =>
+            `<button style="display:block; width:100%; margin-bottom:5px; padding:6px; border:1px solid #ccc; border-radius:4px; background:${
+              i === activeStep ? "#ef88ad" : "#fff2eb"
+            }; font-weight:${i === activeStep ? "bold" : "normal"};">${step}</button>`
+        )
+        .join("")}
+    </div>
+
+    <!-- Middle column -->
+    <div style="flex:2; border:2px solid black; border-radius:8px; padding:10px; background:#ffdcdc;">
+      <h3>${steps[activeStep]}</h3>
+      <p>${stepContents[activeStep]?.content || "New step content..."}</p>
+    </div>
+
+    <!-- Right column -->
+    <div style="flex:1; border:2px solid black; border-radius:8px; padding:10px; background:#ffdcdc;">
+      <h3>Output</h3>
+      <p>${stepContents[activeStep]?.output || "New step output..."}</p>
+    </div>
+  </div>
+</body>
+</html>
+    `;
+    return tabsHTML.trim();
   };
 
   return (
@@ -37,17 +67,13 @@ export default function TabsTab() {
         <div className="tabs-column left-column">
           <div className="tabs-header">
             <span>Tabs Header:</span>
-            <button className="add-step" onClick={addStep}>
-              [+]
-            </button>
+            <button className="add-step" onClick={addStep}>[+]</button>
           </div>
           <div className="steps-list">
             {steps.map((step, index) => (
               <button
                 key={index}
-                className={`step-button ${
-                  activeStep === index ? "active" : ""
-                }`}
+                className={`step-button ${activeStep === index ? "active" : ""}`}
                 onClick={() => setActiveStep(index)}
               >
                 {step}
@@ -66,7 +92,25 @@ export default function TabsTab() {
         {/* Right Column */}
         <div className="tabs-column right-column">
           <h3>Output</h3>
-          <p>{stepContents[activeStep]?.output || "New step output..."}</p>
+          <textarea
+            style={{ width: "100%", height: "200px" }}
+            readOnly
+            value={generateOutputHTML()}
+          />
+          <button
+            onClick={() => navigator.clipboard.writeText(generateOutputHTML())}
+            style={{
+              marginTop: "10px",
+              padding: "8px 12px",
+              border: "none",
+              background: "#be5985",
+              color: "white",
+              borderRadius: "4px",
+              cursor: "pointer",
+            }}
+          >
+            Copy HTML
+          </button>
         </div>
       </div>
     </div>

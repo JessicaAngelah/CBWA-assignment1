@@ -338,3 +338,53 @@ body.dark-mode .step-button.active {
   border: 2px solid #ef88ad;
   background-color: #be5985;
 }
+
+.ellipsis-btn {
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.ellipsis-btn.open {
+  transform: rotate(90deg);
+}
+
+.ellipsis-menu-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 30px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  min-width: 120px;
+  overflow: hidden;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.3s ease;
+  z-index: 10;
+}
+
+.dropdown.show {
+  transform: scaleY(1);
+}
+
+.dropdown button {
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.dropdown button:hover {
+  background: #f0f0f0;
+}
