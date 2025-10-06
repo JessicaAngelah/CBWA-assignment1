@@ -13,4 +13,4 @@ The goal is to create a **Next.js web application** that generates HTML5 + JS co
 - Cookies to remember the last active menu/tab
 - Output of HTML5 + JS code (inline CSS, no CSS classes)
 
-![Homepage Screenshot](src/assets/Img1.png)
+![Homepage Screenshot](assets\Img1.png)
