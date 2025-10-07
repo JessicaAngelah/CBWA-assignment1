@@ -11,9 +11,23 @@ export default function TabsTab() {
     { content: "This is a long ahhh paragraph for Step 3.", output: "Output for Step 3" },
   ];
 
+  // Add a new step
   const addStep = () => {
     const newStepNum = steps.length + 1;
     setSteps([...steps, `Step ${newStepNum}`]);
+  };
+
+  // Remove the last step
+  const removeStep = () => {
+    if (steps.length > 1) {
+      const updatedSteps = steps.slice(0, -1);
+      setSteps(updatedSteps);
+
+      // Adjust active step if current one was removed
+      if (activeStep >= updatedSteps.length) {
+        setActiveStep(updatedSteps.length - 1);
+      }
+    }
   };
 
   // ✅ Generate HTML output with inline styles only
@@ -67,7 +81,10 @@ export default function TabsTab() {
         <div className="tabs-column left-column">
           <div className="tabs-header">
             <span>Tabs Header:</span>
-            <button className="add-step" onClick={addStep}>[+]</button>
+            <div style={{ display: "flex", gap: "6px" }}>
+              <button className="add-step" onClick={addStep}>[+]</button>
+              <button className="add-step" onClick={removeStep}>[-]</button>
+            </div>
           </div>
           <div className="steps-list">
             {steps.map((step, index) => (

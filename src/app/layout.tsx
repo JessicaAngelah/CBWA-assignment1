@@ -2,17 +2,18 @@ import "./globals.css";
 import Header from "./components/Header";
 import Navbar from "./components/NavBar";
 import Footer from "./components/Footer";
-import TabsTab from "./components/tabs/TabsTab";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body>
-        <div className="app-content">
-          <Header />
-          <Navbar />
-            <TabsTab />
-        </div>
+        <Header />
+        <Navbar />
+        <main>{children}</main> {/* 👈 this is where /tabs and /about render */}
         <Footer />
       </body>
     </html>

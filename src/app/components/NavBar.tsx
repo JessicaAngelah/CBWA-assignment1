@@ -24,8 +24,8 @@ const Navbar = () => {
   return (
     <nav className="app-navbar">
       <ul className="nav-list">
-        <li className={pathname === "/tabs" ? "active" : ""}>
-          <Link href="/tabs">Tabs</Link>
+        <li className={pathname === "/tabss" ? "active" : ""}>
+        <Link href="/tabss">Tabs</Link>
         </li>
         <li className={pathname === "/prelab" ? "active" : ""}>
           <Link href="/prelab">Pre-lab Questions</Link>
