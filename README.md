@@ -100,7 +100,7 @@ This approach provides:
 
 ## 📺 Demo Video
 
-**YouTube Demo Link:** [[Add your video link here](https://youtu.be/Hb9postwSnk)]  
+**YouTube Demo Link:** [https://youtu.be/Hb9postwSnk]  
 
 ---
 
