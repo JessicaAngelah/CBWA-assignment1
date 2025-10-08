@@ -6,7 +6,6 @@ export default function TabsTab() {
   const [activeStep, setActiveStep] = useState(0);
   const [stepContents, setStepContents] = useState<{ content: string }[]>([]);
 
-  // ✅ Load saved tabs from localStorage (optional)
   useEffect(() => {
     const savedSteps = localStorage.getItem("steps");
     const savedContents = localStorage.getItem("stepContents");
@@ -24,7 +23,6 @@ export default function TabsTab() {
     }
   }, []);
 
-  // ✅ Save to localStorage on change
   useEffect(() => {
     if (steps.length > 0 && stepContents.length > 0) {
       localStorage.setItem("steps", JSON.stringify(steps));
@@ -32,7 +30,6 @@ export default function TabsTab() {
     }
   }, [steps, stepContents]);
 
-  // ➕ Add step
   const addStep = () => {
     if (steps.length >= 15) {
       alert("Maximum of 15 tabs reached!");
@@ -43,7 +40,6 @@ export default function TabsTab() {
     setStepContents([...stepContents, { content: "New step content..." }]);
   };
 
-  // ➖ Remove step
   const removeStep = () => {
     if (steps.length > 1) {
       const updatedSteps = steps.slice(0, -1);
@@ -54,21 +50,18 @@ export default function TabsTab() {
     }
   };
 
-  // ✏️ Rename step
   const handleRename = (index: number, newName: string) => {
     const updated = [...steps];
     updated[index] = newName;
     setSteps(updated);
   };
 
-  // 📝 Edit content
   const handleContentChange = (index: number, newContent: string) => {
     const updated = [...stepContents];
     updated[index].content = newContent;
     setStepContents(updated);
   };
 
-  // 💾 Generate live HTML output (auto updates)
   const generatedHTML = useMemo(() => {
     return `
 <!DOCTYPE html>
@@ -111,7 +104,6 @@ export default function TabsTab() {
 </html>`.trim();
   }, [steps, stepContents, activeStep]);
 
-  // ✅ UI layout
   return (
     <div className="tabs-tab">
       <h2 className="tabs-title">Tabs</h2>

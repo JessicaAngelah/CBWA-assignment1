@@ -13,7 +13,7 @@ export default function RootLayout({
       <body>
         <Header />
         <Navbar />
-        <main>{children}</main> {/* 👈 this is where /tabs and /about render */}
+        <main>{children}</main>
         <Footer />
       </body>
     </html>
