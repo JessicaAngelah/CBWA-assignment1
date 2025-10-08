@@ -26,11 +26,11 @@ The system simulates a **Freelance Services Agreement** web interface with respo
 ### 🎨 Themes
 - **Dark Mode** and **Light Mode** support.  
 - Users can toggle between modes easily.
-- (Future-ready) Option to extend with additional custom color schemes.
+- The selected theme preference is **saved automatically** so that it remains consistent across sessions.
 
 ---
 
-### 🍔 Hamburger / Kabab Menu
+### 🍔 Hamburger / Ellipsis Menu
 - Includes a **Hamburger-style menu** for navigation.  
 - Uses **CSS transform animations** for smooth menu transitions.
 - Simplifies navigation across different devices.
@@ -41,9 +41,11 @@ The system simulates a **Freelance Services Agreement** web interface with respo
 - Dynamically **add (+)** or **remove (−)** up to **15 tabs**.  
 - **Editable tab headings** — users can rename tabs.  
 - **Editable tab content** — users can input and modify content directly.  
-- **LocalStorage integration** 💾 *(optional, easily added in 2 lines later)*  
-  - Saves and restores tab data automatically between sessions.  
-- Supports accessibility and keyboard navigation for tab management.
+- **Persistent data storage** using `localStorage` or cookies 💾  
+  - Saves and restores **tab titles, content, and number of tabs** between sessions.
+  - When users refresh or reopen the app, their previously created tabs are automatically restored.
+  - Implemented with an optional two-line code addition for easy activation.
+- Fully supports keyboard accessibility and smooth editing experience.
 
 ---
 
@@ -55,6 +57,7 @@ The system simulates a **Freelance Services Agreement** web interface with respo
   - ✅ Three Tabs Example  
   - ✅ Five Tabs Example  
 - Ensures visual consistency and correct rendering when loaded.
+- Helps instructors quickly review students’ tab configuration results directly from the generated HTML output.
 
 ---
 
@@ -70,6 +73,25 @@ The system simulates a **Freelance Services Agreement** web interface with respo
 
 ---
 
+## 💾 Cookies & LocalStorage Integration
+
+The app uses **Web Storage API (localStorage)** to enhance user experience by saving user preferences and tab data locally in the browser.  
+This ensures a seamless and consistent workflow without requiring a backend database.
+
+**Data stored includes:**
+- Last active tab or menu  
+- Tab names and content  
+- Theme preference (Dark or Light mode)
+
+When users reopen the site, these settings are **automatically restored** from storage — maintaining their previous session exactly as they left it.
+
+This approach provides:
+- 🔹 Faster load times (no external data fetch required)  
+- 🔹 Improved user convenience and continuity  
+- 🔹 Optional easy removal by disabling two simple lines of code  
+
+---
+
 ## 📸 Preview
 
 ![Homepage Screenshot](./assets/Img1.png)
@@ -78,8 +100,7 @@ The system simulates a **Freelance Services Agreement** web interface with respo
 
 ## 📺 Demo Video
 
-**YouTube Demo Link:** [Add your video link here]  
-*(Showcasing navigation, theme toggle, tab operations, and HTML output)*
+**YouTube Demo Link:** [[Add your video link here](https://youtu.be/Hb9postwSnk)]  
 
 ---
 

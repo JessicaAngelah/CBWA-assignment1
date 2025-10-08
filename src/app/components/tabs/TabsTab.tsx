@@ -1,11 +1,12 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 export default function TabsTab() {
   const [steps, setSteps] = useState<string[]>([]);
   const [activeStep, setActiveStep] = useState(0);
-  const [stepContents, setStepContents] = useState<{ content: string; output: string }[]>([]);
+  const [stepContents, setStepContents] = useState<{ content: string }[]>([]);
 
+  // ✅ Load saved tabs from localStorage (optional)
   useEffect(() => {
     const savedSteps = localStorage.getItem("steps");
     const savedContents = localStorage.getItem("stepContents");
@@ -16,14 +17,14 @@ export default function TabsTab() {
     } else {
       setSteps(["Step 1", "Step 2", "Step 3"]);
       setStepContents([
-        { content: "This is a long ahhh paragraph for Step 1.", output: "Output for Step 1" },
-        { content: "This is a long ahhh paragraph for Step 2.", output: "Output for Step 2" },
-        { content: "This is a long ahhh paragraph for Step 3.", output: "Output for Step 3" },
+        { content: "This is a paragraph for Step 1." },
+        { content: "This is a paragraph for Step 2." },
+        { content: "This is a paragraph for Step 3." },
       ]);
     }
   }, []);
 
-
+  // ✅ Save to localStorage on change
   useEffect(() => {
     if (steps.length > 0 && stepContents.length > 0) {
       localStorage.setItem("steps", JSON.stringify(steps));
@@ -31,21 +32,18 @@ export default function TabsTab() {
     }
   }, [steps, stepContents]);
 
-  // Add new step
+  // ➕ Add step
   const addStep = () => {
-  if (steps.length >= 15) {
-    alert("Maximum of 15 tabs reached!");
-    return;
-  }
-  const newStepNum = steps.length + 1;
-  setSteps([...steps, `Step ${newStepNum}`]);
-  setStepContents([...stepContents, { content: "New step content...", output: "New step output..." }]);
+    if (steps.length >= 15) {
+      alert("Maximum of 15 tabs reached!");
+      return;
+    }
+    const newStepNum = steps.length + 1;
+    setSteps([...steps, `Step ${newStepNum}`]);
+    setStepContents([...stepContents, { content: "New step content..." }]);
   };
 
-
-  
-
-  // Remove last step
+  // ➖ Remove step
   const removeStep = () => {
     if (steps.length > 1) {
       const updatedSteps = steps.slice(0, -1);
@@ -56,23 +54,23 @@ export default function TabsTab() {
     }
   };
 
-  // Edit tab name
+  // ✏️ Rename step
   const handleRename = (index: number, newName: string) => {
     const updated = [...steps];
     updated[index] = newName;
     setSteps(updated);
   };
 
-  // Edit tab content
+  // 📝 Edit content
   const handleContentChange = (index: number, newContent: string) => {
     const updated = [...stepContents];
     updated[index].content = newContent;
     setStepContents(updated);
   };
 
-  // Generate HTML output (inline CSS only)
-  const generateOutputHTML = () => {
-    let tabsHTML = `
+  // 💾 Generate live HTML output (auto updates)
+  const generatedHTML = useMemo(() => {
+    return `
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,34 +79,39 @@ export default function TabsTab() {
 </head>
 <body style="font-family: Arial, sans-serif; background:#ffe4e9; padding:20px;">
   <div style="display:flex; gap:20px;">
+    <!-- Left Column -->
     <div style="flex:1; border:2px solid black; border-radius:8px; padding:10px; background:#ffdcdc;">
       <h3 style="margin:0 0 10px 0;">Tabs</h3>
       ${steps
         .map(
-          (step, i) =>
-            `<button style="display:block; width:100%; margin-bottom:5px; padding:6px; border:1px solid #ccc; border-radius:4px; background:${
-              i === activeStep ? "#ef88ad" : "#fff2eb"
-            }; font-weight:${i === activeStep ? "bold" : "normal"};">${step}</button>`
+          (step, i) => `
+        <button style="display:block; width:100%; margin-bottom:5px; padding:6px;
+          border:1px solid #ccc; border-radius:4px;
+          background:${i === activeStep ? "#ef88ad" : "#fff2eb"};
+          font-weight:${i === activeStep ? "bold" : "normal"};">
+          ${step}
+        </button>`
         )
         .join("")}
     </div>
 
+    <!-- Middle Column -->
     <div style="flex:2; border:2px solid black; border-radius:8px; padding:10px; background:#ffdcdc;">
       <h3>${steps[activeStep]}</h3>
       <p>${stepContents[activeStep]?.content || "New step content..."}</p>
     </div>
 
+    <!-- Right Column -->
     <div style="flex:1; border:2px solid black; border-radius:8px; padding:10px; background:#ffdcdc;">
       <h3>Output</h3>
-      <p>${stepContents[activeStep]?.output || "New step output..."}</p>
+      <p>${stepContents[activeStep]?.content || "New step content..."}</p>
     </div>
   </div>
 </body>
-</html>
-    `;
-    return tabsHTML.trim();
-  };
+</html>`.trim();
+  }, [steps, stepContents, activeStep]);
 
+  // ✅ UI layout
   return (
     <div className="tabs-tab">
       <h2 className="tabs-title">Tabs</h2>
@@ -123,6 +126,7 @@ export default function TabsTab() {
               <button className="add-step" onClick={removeStep}>[-]</button>
             </div>
           </div>
+
           <div className="steps-list">
             {steps.map((step, index) => (
               <button
@@ -157,10 +161,10 @@ export default function TabsTab() {
           <textarea
             style={{ width: "100%", height: "200px" }}
             readOnly
-            value={generateOutputHTML()}
+            value={generatedHTML}
           />
           <button
-            onClick={() => navigator.clipboard.writeText(generateOutputHTML())}
+            onClick={() => navigator.clipboard.writeText(generatedHTML)}
             style={{
               marginTop: "10px",
               padding: "8px 12px",

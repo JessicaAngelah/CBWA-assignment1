@@ -15,7 +15,7 @@ export default function About() {
         <iframe
           width="560"
           height="315"
-          src="https://www.youtube.com/embed/23urWKmHS6o?si=bI4x7wXKUA-JFyvp"
+          src="https://youtu.be/Hb9postwSnk"
           title="Project Demo Video"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
