@@ -195,6 +195,8 @@ export default function EscapeRoom() {
           <div className="stage-card">
             <h2>Stage 1 — Format Code</h2>
             <p>Fix the code formatting below:</p>
+            <p>function hello() 
+  console.log(Hello World); </p>
 
             <textarea
               value={codeInput}
